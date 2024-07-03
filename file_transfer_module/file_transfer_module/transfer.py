@@ -1,10 +1,20 @@
 import os
 import mimetypes
 import boto3
+from dotenv import load_dotenv
 from google.cloud import storage
 
+
+class awsConnection:
+    def getS3Connection_enVariables(self):
+        aws_access_Id = os.getenv('aws_access_Id')
+        aws_access_pwd = os.getenv('aws_access_pwd')
+        s3 =  boto3.client('s3',aws_access_key_id = aws_access_Id,aws_secret_access_key = aws_access_pwd) 
+        return s3
+    
 def upload_to_s3(file_path, bucket_name):
-    s3 = boto3.client('s3')
+    aws_conn = awsConnection()
+    s3 = aws_conn.getS3Connection_enVariables()
     file_key = os.path.relpath(file_path)
     s3.upload_file(file_path, bucket_name, file_key)
 
@@ -33,10 +43,11 @@ def transfer_files(directory_path, s3_bucket_name, gcs_bucket_name, s3_file_type
 
 # Example usage
 if __name__ == '__main__':
+    load_dotenv()
     directory_path = '/path/to/your/directory'
     s3_bucket_name = 'your-s3-bucket-name'
     gcs_bucket_name = 'your-gcs-bucket-name'
-    s3_file_types = ['.jpg', '.png', '.svg', '.webp']
+    s3_file_types = ['.jpg', '.png', '.svg', '.webp','mp3', 'mp4', 'mpeg4', 'wmv', '3gp', 'webm']
     gcs_file_types = ['.doc', '.docx', '.csv', '.pdf']
 
     transfer_files(directory_path, s3_bucket_name, gcs_bucket_name, s3_file_types, gcs_file_types)
