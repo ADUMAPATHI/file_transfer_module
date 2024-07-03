@@ -13,8 +13,8 @@ Supports handling of files in subdirectories of the specified directory.
 Installation:
 
 1. Clone the repository or download the source code:
-	git clone https://github.com/your_username/file-transfer-module.git
-	cd file-transfer-module
+	git clone https://github.com/ADUMAPATHI/file_transfer_module
+	cd file_transfer_module
 
 2.Install the required dependencies using pip:
 	pip install .
